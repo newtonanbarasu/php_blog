@@ -1,6 +1,7 @@
  <?php
    include "connection.php";   
    include "login-check.php";
+   
     $result = mysql_query("SELECT * FROM post");
    
   	while( $row = mysql_fetch_assoc( $result ))

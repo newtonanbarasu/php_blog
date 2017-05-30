@@ -1,7 +1,8 @@
 <?php
-  session_start();
+
   if (isset($_POST['login'])) 
   {
+    session_start();
     //login
     include "connection.php";
     $user = $_POST['user'];
@@ -27,7 +28,7 @@
     if ($_SESSION['login'] == '1'){ header('Location:../index.php'); }
     
     if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
+      header('Location:../login.php?login?msg');
     exit();
 }
 ?>

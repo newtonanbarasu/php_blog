@@ -4,70 +4,49 @@
   <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <?php
-  
-  if ($_SESSION['login'] == '1')
-  { 
-    header('location: index.php'); 
-  }
-  else 
-  {
-    header('location:login.php');
-  }
-
+  include "action/connection-check.php";
   if (isset($_POST['register']))
   {
     include "action/connection.php"; 
-    // register code
     $email = $_REQUEST['email'];
     $name = $_REQUEST['name'];
     $password = $_REQUEST['password'];
     $mobile = $_REQUEST['mobile'];
     $gender = $_REQUEST['gender'];
-    $required = array ('email','name','password','mobile','gender');
-    $error = false ;
-      foreach($required as $fields) 
-      {
-        if (empty($_POST[$fields])) 
-        {
-          $error = true;
-        }
-      }
-    if ($error) 
-    {
-      echo "<div class='error register-err'>All fields are required.</div>";
-    } 
-    else 
-    {
-      $query = mysql_query("INSERT INTO user (`email`,`name`,`password`,`mobile`,`gender`)VALUES('$email', '$name','$password', '$mobile','$gender')");
-      echo "<div class='success register-succuess'>Proceed ...to login</div>";
+    $image_name=$_FILES['image']['name'];
+    $image_path = 'images/'.$image_name;    
+    $query = mysql_query("INSERT INTO user (`email`,`name`,`password`,`mobile`,`gender`,`image`)VALUES('$email', '$name','$password', '$mobile','$gender','".$image_path."')");
+    if(move_uploaded_file($_FILES['image']['tmp_name'],$image_path)){
+       // if(move_uploaded_file($_FILES['image']['tmp_name'],$image_path . $image_name)){
+      // echo 'Your profile image was successful added, view the file <a href="' . $image_path . $image_name . '" title="Your File">here</a>';
+      header('Location:login.php?login');
+      $_SESSION['image'] = $row['image'];
+     }
+  }
+    if (strpos($_SERVER['REQUEST_URI'],"msg")) 
+    { 
+      echo "<div class='error'>Wrong username or password</div>"; 
     }
-  }
-  if (strpos($_SERVER['REQUEST_URI'],"msg")) 
-  { 
-    echo "<div class='error'>Wrong username or password</div>"; 
-  }
-  // if (isset($POST['register']))
-  // {
-  //   $result = mysql_query("SELECT * FROM user");
-  // }
 ?>
 
 <body>
   <!-- Login section -->
+  <div class="col-md-12 home-float"><span><a href ="landing.php" target="_blank" ><i class="fa fa-home" aria-hidden="true"></i>
+</a></span><div>
   <div class="login-page">
-    <div><span style="position:absolute;right:20px; top:20px; color:#000; font-size:14px; font-weight:800; text-transform:captialize; text-shadow:none;"><a href ="landing.php" >Home</a></span><div>
     <h1 class="heading">Blog User Registration! </h1>
     <div class="form">
-      <form class="register-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
-        <input type="text" placeholder="email address" name="email"/>
-        <input type="text" placeholder="Username" name="name" autocomplete="off"/>
-        <input type="password" placeholder="password" name="password" autocomplete="off"/>
+      <form class="register-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off" enctype="multipart/form-data" >
+        <input type="email" placeholder="email address" name="email" required/>
+        <input type="text" placeholder="Username" name="name" autocomplete="off" required/>
+        <input type="password" placeholder="password" name="password" autocomplete="off" required/>
         <div class="radio">  
             <span class="label">Gender :</span>
            <span class="equal"><input type="radio" name="gender" value="male"> <span class="text">Male</span></span> 
            <span class="equal"> <input type="radio" name="gender" value="female"> <span class="text">Female</span></span> 
         </div>
-        <input type="number" placeholder="mobile" name="mobile" autocomplete="off"/>
+        <input type="number" placeholder="mobile" name="mobile" maxlength='10' autocomplete="off" required/>
+        <input type="file" placeholder="upload image" name="image" required />
         <button type="submit" name="register" value="create">create</button>
         <p class="message">Already registered? <a href="#">Sign In</a></p>
       </form>
@@ -84,11 +63,11 @@
 
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript">
-    $('.message a').click(function(e){
+  $('.message a').click(function(e){
       e.preventDefault();
      $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
      $('.heading').html('Blog User login');
-     $('.register-succuess,.register-err').hide();
+     $('.register-succuess,.register-err,.error').hide();
      
   });
     var url = window.location.href;

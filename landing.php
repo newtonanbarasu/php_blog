@@ -1,4 +1,3 @@
-
 <html>
 <head>
 	<title></title>
@@ -11,21 +10,24 @@
     <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
 </head>
 <body>
-      <h1 id="header">My Blog <span style="position:absolute;right:20px; top:20px; color:#000; font-size:14px; text-transform:captialize; text-shadow:none;"><a href ="login.php">Sign up</a> / <a href="login.php?login">login</a></span></span></h1>
-      <div class="container list-article">
-        <div class="btn-group pull-right" id="switch-view">
-          <button class="active">
-            List
-          </button>
-          <button class="">
-            Grid
-          </button>
-        </div>
-        <div class="clearfix"></div>
-        <div class="row">
-          <?php
-          include "action/connection.php"; 
-          $comment =mysql_query("SELECT * FROM post");
+    <h1 id="header">My Blog <span style="position:absolute;right:20px; top:20px; color:#000; font-size:14px; text-transform:captialize; text-shadow:none;"><a href ="login.php">Sign up</a> / <a href="login.php?login">login</a></span></span></h1>
+    <div class="container list-article">
+      <div class="btn-group pull-right" id="switch-view">
+        <button class="active">
+          <i class="fa fa-list" aria-hidden="true"></i>
+        </button>
+        <button class="">
+          <i class="fa fa-th-large" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row">
+        <?php
+        include "action/connection.php"; 
+        $comment =mysql_query("SELECT * FROM post");
+        $count =mysql_num_rows($comment);
+        if($count>0)
+        {
           while( $row = mysql_fetch_assoc( $comment ))
           {
             echo "<div class='col-xs-12 article-wrapper'>";
@@ -36,16 +38,26 @@
             echo "</article>";
             echo "</div>";
           }
-        ?>
-        </div>
+        }
+        else
+        {
+          echo "<div class='col-xs-12 article-wrapper'>";
+          echo "<article style='padding-left:75px;'>";
+          echo "<h1 style='text-align:center;'>No new post added !!!</h1>";
+          echo "<p></p>";
+          echo "</article>";
+          echo "</div>";
+        }
+      ?>
       </div>
+    </div>
 </body>
 </html>
 <script type="text/javascript">
   $(function(){
     $("#switch-view").click(function(){
       $(this).find("button").toggleClass("active");
-      $(".article-wrapper").toggleClass("bloc col-xs-12 col-xs-4");
+      $(".article-wrapper").toggleClass("blog col-xs-12 col-xs-4");
     });
   });
 </script>

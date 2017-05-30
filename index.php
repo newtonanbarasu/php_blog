@@ -44,7 +44,7 @@
                 <div class="row table"> 
                     <div class="col-md-6 text-primary heading">Title</div> 
                     <div class="col-md-6 text-primary heading">Content</div>              
-                    <?php  require_once 'action/post-preview.php'; ?>
+                    <?php  include 'action/post-preview.php'; ?>
                   </div> 
             </div>                   
         </div>               

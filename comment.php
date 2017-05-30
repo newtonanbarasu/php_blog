@@ -11,9 +11,9 @@
 
 	   <div id="main-container" class="row">
         <h1 class="text-center"> 
-            <span style="position:absolute;left:20px; top:20px; color:#000; font-size:14px; text-transform:uppercase;"><a href ="index.php" >Home</a></span>
-            <span>Comment on Post</span>
-            <span style="position:absolute;right:20px; top:20px; color:#000; font-size:14px; text-transform:uppercase;"><a href ="logout.php" >logout</a></span>
+<!--             <span style="position:absolute;left:20px; top:20px; color:#000; font-size:14px; text-transform:uppercase;"><a href ="index.php" >Home</a></span>
+ -->            <span>Comment on Post</span>
+            <span style="position:absolute;right:20px; top:20px; color:#000; font-size:14px; text-transform:uppercase;"><a href ="action/logout.php" >HOME</a></span>
         </h1>
         <br>
         <!-- preview -->
