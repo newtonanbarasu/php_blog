@@ -24,15 +24,16 @@
       <div class="row">
         <?php
         include "action/connection.php"; 
-        $comment =mysql_query("SELECT * FROM post");
+        $comment =mysql_query("SELECT * FROM post INNER JOIN user on post.user_id=user.id");
         $count =mysql_num_rows($comment);
         if($count>0)
         {
           while( $row = mysql_fetch_assoc( $comment ))
           {
+            $image_path = (isset($row["image"]) && !empty($row["image"]) && file_exists($row["image"]))?$row["image"]:'http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg';
             echo "<div class='col-xs-12 article-wrapper'>";
             echo "<article>";
-            echo "<div class='img-wrapper'><img src='http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg' /></div>";
+            echo "<div class='img-wrapper'><img src='".$image_path."' /></div>";
             echo "<h1>".$row['title']."</h1>";
             echo "<p>".$row['content']."</p>";
             echo "</article>";
@@ -43,6 +44,7 @@
         {
           echo "<div class='col-xs-12 article-wrapper'>";
           echo "<article style='padding-left:75px;'>";
+          echo "<div class='img-wrapper'><img src='http://emblemsbattlefield.com/uploads/posts/2014/10/facebook-default-photo-male_1.jpg' /></div>";
           echo "<h1 style='text-align:center;'>No new post added !!!</h1>";
           echo "<p></p>";
           echo "</article>";

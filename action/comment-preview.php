@@ -1,6 +1,5 @@
  <?php
    include "connection.php";   
-   include "login-check.php";
    
     $result = mysql_query("SELECT * FROM post");
    
@@ -14,8 +13,8 @@
       $comment =mysql_query("SELECT * FROM comments where post_id='$id'");
       while( $row = mysql_fetch_array( $comment ))
       {
-        echo "<p class='col-md-12 co-xs-12 comment'>
-                <span>'".$row['content']."'</span> comment by 
+        echo "<p class='col-md-12 co-xs-12 comment'> comment :
+                <span>'".$row['content']."'</span>
                 <span>".$_SESSION['user']."</span>
               </p>";
       }

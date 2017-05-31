@@ -19,6 +19,7 @@
     if(move_uploaded_file($_FILES['image']['tmp_name'],$image_path)){
        // if(move_uploaded_file($_FILES['image']['tmp_name'],$image_path . $image_name)){
       // echo 'Your profile image was successful added, view the file <a href="' . $image_path . $image_name . '" title="Your File">here</a>';
+      echo "<div class='error'>Register successfully</div>"; 
       header('Location:login.php?login');
       $_SESSION['image'] = $row['image'];
      }
@@ -37,16 +38,16 @@
     <h1 class="heading">Blog User Registration! </h1>
     <div class="form">
       <form class="register-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off" enctype="multipart/form-data" >
-        <input type="email" placeholder="email address" name="email" required/>
+        <input type="email" placeholder="Email address" name="email" required/>
         <input type="text" placeholder="Username" name="name" autocomplete="off" required/>
-        <input type="password" placeholder="password" name="password" autocomplete="off" required/>
+        <input type="password" placeholder="Password" name="password" autocomplete="off" required/>
         <div class="radio">  
             <span class="label">Gender :</span>
            <span class="equal"><input type="radio" name="gender" value="male"> <span class="text">Male</span></span> 
            <span class="equal"> <input type="radio" name="gender" value="female"> <span class="text">Female</span></span> 
         </div>
-        <input type="number" placeholder="mobile" name="mobile" maxlength='10' autocomplete="off" required/>
-        <input type="file" placeholder="upload image" name="image" required />
+        <input type="number" placeholder="Mobile" name="mobile" maxlength='10' autocomplete="off" required/>
+        <div class="user-img"><span>User Image</span><input type="file" placeholder="upload image" name="image" required /></div>
         <button type="submit" name="register" value="create">create</button>
         <p class="message">Already registered? <a href="#">Sign In</a></p>
       </form>
